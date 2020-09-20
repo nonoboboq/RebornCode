@@ -60,8 +60,10 @@ System.out.println(s1.equal(s2));//true;这是由于两个对象都是引用相�
 # 4.代码块
 &emsp;1.普通代码块:直接在方法和语句中定义的代码块。{}中的代码    
 &emsp;2.构造代码块：直接写在类中，类中的变量,每次运行的时候，会将构造代码块添加到构造函数中的前面。当使用this()方法时，另一个this方法中已经被添加过，不会被添加。   
-&emsp;3.静态代码块：static  
-&emsp;4.同步代码块：
+&emsp;3.静态代码块：使用static{}括起来的叫静态代码块，在程序载入的时候就优先执行，例如：数据库连接等其他提前需要准备好的代码会放在static代码块中。类加载时会优先使用static代码块，多次载入也就只执行一次static代码块。  
+&emsp;**“是在类初始化时进行，不是在创建对象时进行”且静态初始化块中代码不能访问非static成员变量**  
+&emsp;4.同步代码块：在多线程时使用，用来给共享空间进行加锁操作。（？）  
+**执行顺序**：静态、构造、普通代码块
 ```
 public class Demo(){
     {
@@ -79,3 +81,30 @@ public class Demo(){
     }
 }
 ```
+# 5.package
+解决类之间重名问题；为了便于管理类，合适的类位于合适的包。一般需要在文件第一行写上该类的名字：(例如：package com.xxx.xxx 域名倒写)  
+
+完全限定名:包名+类名  
+JDK中的主要包：  
+&emsp;&emsp;java.lang: java语言中的核心类，如String、Math、Integer、System、Thread等.**不需要手动导入，自动加载**  
+&emsp;&emsp;java.awt 包含了构成抽象窗口工具集  
+&emsp;&emsp;util 工具包 
+&emsp;&emsp;net 网络包  
+&emsp;&emsp;io 输入输出流包  
+# 6.import
+当需要引入非lang包的其他java类的时候，需要使用import工具，如果不使用import，需要每次都要写入完全限定名字：  
+用法：  
+&emsp;&emsp;1. import.包名.类名  
+&emsp;&emsp;2. import.*  
+**注：** *当一个java文件需要使用多个同名类的时候，只能选择导入一个，另一个使用完全限定名字进行导入。*  
+静态导包：当需要多次使用某个类时候，可使用该方法。  
+```
+import static java.lang.Math.*
+
+System.out.println(Math.sqrt(2))
+System.out.println(sqrt(2)) //简化成这样写。但同一个类中定义了sqrt()方法时，会优先使用本类中的同名方法。
+
+```
+
+# 7.封装<time 00:55:00>
+
