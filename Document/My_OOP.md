@@ -30,7 +30,7 @@ String s2 = new String("apple");
 System.out.println(s1==s2);//false 这里是将是将s1、s2两个对象进行比较，对象地址不同。这里代表了两个不同的对象
 System.out.println(s1.equal(s2));//true;这是由于两个对象都是引用相同的
 ```
-![equal用法](../.png/equal.png)
+![equal用法](https://github.com/nonoboboq/RebornCode/blob/master/.png/equal.PNG)
  
 ### &emsp;4.clone()
 
