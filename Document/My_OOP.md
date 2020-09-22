@@ -110,6 +110,9 @@ System.out.println(sqrt(2)) //简化成这样写。但同一个类中定义了sq
 将类中的某些属性通过private关键字隐藏到内部，不允许外部程序进行直接访问，可以通过类的自身方法进行访问和操作。
 # 8.访问控制符
 &emsp;&emsp;1.public  
-&emsp;&emsp;2.protected  
-&emsp;&emsp;3.default  
-&emsp;&emsp;4.private    
+&emsp;&emsp;2.protected 可以被当前类访问、当前的包中其他类访问、子类进行访问  
+&emsp;&emsp;3.default 可以被当前类访问、当前的包中其他类访问  
+&emsp;&emsp;4.private 可以被当前类访问  
+**注**：构造方法也可能是private，在单例模式下使用。   
+# 9.值传递与引用传递
+java中区分基本类型：如整数、进行值传递，自定义类及其他(?)为引用传递。
