@@ -106,5 +106,10 @@ System.out.println(sqrt(2)) //简化成这样写。但同一个类中定义了sq
 
 ```
 
-# 7.封装123
-
+# 7.封装 
+将类中的某些属性通过private关键字隐藏到内部，不允许外部程序进行直接访问，可以通过类的自身方法进行访问和操作。
+# 8.访问控制符
+&emsp;&emsp;1.public  
+&emsp;&emsp;2.protected  
+&emsp;&emsp;3.default  
+&emsp;&emsp;4.private    
