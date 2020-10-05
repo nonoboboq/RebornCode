@@ -116,3 +116,93 @@ System.out.println(sqrt(2)) //简化成这样写。但同一个类中定义了sq
 **注**：构造方法也可能是private，在单例模式下使用。   
 # 9.值传递与引用传递
 java中区分基本类型：如整数、进行值传递，自定义类及其他(?)为引用传递。
+
+# 10.super
+&emsp;任何类的构造函数中，若构造函数的第一行没有显式的调用super()，**那么Java默认都会调用super()作为父类的初始化函数**。  
+1.可以在子类中调用父类被子类覆盖的方法。super.父类方法名称  
+2.当super在普通方法中使用的话，可以写在该方法中的任意位置。  
+3.当super在构造方法中使用的话，会调用父类的构造方法、一定要将super放在第一行。  
+4.在构造方法中super关键字和this()关键字不能同时出现  
+5.父类中私有的属性和方法都不能被调用，包括构造方法  
+
+# 11.局部变量和成员变量
+局部变量：定义在方法中的变量，在整个方法中存在，只能在当前方法中使用。不包含初始化。   
+成员变量：类内的变量叫成员变量(全局变量)作用域为整个类体中。成员变量包含初始值：int 0 ;String null  
+
+# 12.引用类型
+&emsp;基本类型：数值型(整数类型byte short long、浮点类型float double) 字符型(char) 布尔型(boolen)
+&emsp;引用数据类型：类、接口、数组。与指针相比较而言，两个指针可以进行大小比较和相减运算，引用是不可以的。引用是对一个变量或对象的别名，指针是存储了一个对象的地址空间。  
+# 13.static
+修饰类成员变量的时候，表示该变量是类成员变量。与python对比来讲，python中的对象变量通过init函数进行定义与初始化，java中的类变量声明在类中，但对普通变量和static进行区分。
+
+# 14.接口
+java中的继承是单继承，但在使用接口类的时候可以通过implement进行“多重继承”.例子：  
+```
+public interface ATest{
+    public void testFuc1(){};//没有实现
+}
+
+public interface BTest{
+    public void testFuc2(){};//没有实现
+}
+
+
+public class Test implement ATest,BTest{
+    @Override
+    public void testFuc1(){
+        System.out.println("");
+    }
+
+    @Override
+    public void testFuc2(){
+        System.out.println("");
+    }
+
+}
+
+```
+子类中对接口中的函数必须要全部实现。接口类不能实例化，接口类中的变量都是静态常量，不可进行修改，变量不写static修饰的话，默认为static。
+
+# 15.内部类
+把一个类定义在另一个类的内部称为内部类。  
+创建内部类的方式：  
+```
+public class InnerClassDemo {
+    public static void main(String[] args) {
+
+    }
+    class AInnerClass{
+        String str = "abcaaa";
+        public void show(){
+            System.out.println("Innerclass str :"+this.str);
+        }
+
+    }
+}
+//测试类
+public class TestInnerClass {
+    public static void main(String[] args) {
+        InnerClassDemo.AInnerClass tmp = new InnerClassDemo().new AInnerClass();//内部类的创建方法
+        tmp.show();
+    }
+}
+```
+**注**：  
+1.内部类可以访问外部类的私有属性，其实内部类可以看成外部类的中一个“方法”，外部类不能访问内部类的属性。  
+2.内部类不能包含static成员 
+
+## 匿名内部类：
+当定义了一个内部类，实现了某个接口的时候，在使用的过程中只需要使用一次，可以不创建具体的类，采用new interface()
+```
+//测试类
+public class TestInnerClass {
+    public static void main(String[] args) {
+        new Thread(new Runnable()//实例化了一个接口的实现类
+            @Override
+            public void run(){
+
+            }
+        )
+    }
+}
+```
