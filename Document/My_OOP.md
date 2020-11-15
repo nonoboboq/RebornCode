@@ -206,3 +206,199 @@ public class TestInnerClass {
     }
 }
 ```
+# 16.异常机制
+**a.捕获异常**  
+try catch,捕获异常后不会中断程序  
+```
+public class ExceptionDemo {
+    public static void main(String[] args) {
+        try{
+            Scanner in = new Scanner(System.in);
+            System.out.println("Please Input a:");
+            int a = in.nextInt();
+            System.out.println("Please Input b:");
+            int b = in.nextInt();
+            System.out.println("Please a/b:"+a/b);
+        }catch (Exception e){
+            //System.out.println(e);
+            e.printStackTrace();//异常的调用栈
+            System.out.println(e.getMessage());//异常提示
+        }
+    }
+}
+```
+其中的Exception最能够细化捕捉：InputMismatchException输入不匹配、ArithmeticExceptio数学异常、NullPointerException空指针异常  
+try catch finally:finally中的代码总会执行，finally中一般会包含：IO流的关闭操作；数据库连接关闭操作；  
+```
+public class ExceptionDemo {
+    public static void main(String[] args) {
+       System.out.println(test());
+    }
+    private static int test(){
+        int num = 10;
+        try {
+            System.out.println("try");
+            return num+=80; //num值改变后会优先执行finally语句，并在其中返回
+        }catch (Exception e){
+            System.out.println("erroe");
+        }finally {
+            if(num>20){
+                System.out.println("num>20:"+num);
+            }
+            System.out.println("finally");
+            num = 100;
+            return num;
+        }
+    }
+}
+```
+finally唯一不执行的情况是，调用了System.exit（1）的语句  
+**b.声明异常**  
+  
+```
+public class ThrowEdxception {
+    public static void main(String[] args) {
+        //在上层捕获异常
+        try{
+            test();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println("end");
+    }
+    //声明异常，多个异常用,隔开。向上抛出异常
+    private static void test() throws Exception
+    {
+        System.out.println(1/0);
+    }
+}
+```
+在多个方法互相调用的过程中，需要在每个方法都使用Try catch.使用throws声明并抛出，到达最上层进行捕获，可以避免写多个try catch；
+
+# 17.包装类
+包装类是将基本类型封装到一个类中，包含了属性和方法，方便对象操作，包装类无语java.lang包中。
+```
+public class TestDemo {
+    public static void main(String[] args) {
+        int a = 10;
+        Integer b = new Integer(10);
+        //手动类型转换
+        int b1 = b.intValue();//拆箱操作
+        Integer a1 = Integer.valueOf(a);//装箱操作
+        
+        System.out.println(a==b);//True,调用了(Integer)a
+    }
+}
+```
+装箱：将基本数据类型转换成包装类  
+拆箱：将包装类转换成基本数据类型  
+常见包装类型：   
+Boolean:  
+Number:Byte,Short,Integer,Long,Float,Double  
+Character:  
+```
+String s1 = new String("abc");
+String s2 = "abc";
+System.out.println(s1==s2);//false
+System.out.println(s1.equals(s2));//true
+s2 = s2,intern();
+System.out.println(s1==s2);//true
+System.out.println(s1.equals(s2));//true
+```
+集合框架分为（Set、List、Queue）、（Map）：  
+![equal用法](../.png/集合框架1.png)
+
+TreeSet:基于红黑树实现，支持有序操作
+
+HashSet：基于哈希表实现，支持快速查找,基于HashMap实现。默认大小为16，装载因子为0.75,代表了当set中元素大于12个时，就需要开始扩容。
+```
+  public HashSet(int initialCapacity, float loadFactor) {
+        map = new HashMap<>(initialCapacity, loadFactor);
+    }
+其中initialCapacity为初始容量，loadFactor为装载因子。
+```
+&emsp;**HashSet的装载原理**，当向HashSet中装载一个对象时，会调用该对象的HashCode()方法得到其hashCode值，然后根据hashCode值决定该对象的存储位置。HashSet存储成功的条件是：**1.两个对象equal()比较为FALSE 2.两个对象的HashCode()值不相等**
+&emsp;**HashSet的查找原理**：将对象取hashcode()，再进行索引查找。    
+HashSet的基本用法：
+```
+        HashSet<String> a1 = new HashSet<>();
+        String s1 = "abc";
+        a1.add(s1);
+        a1.add("abc");
+        a1.add("qwe");
+        a1.add("tyu");
+
+        System.out.println(a1.size());
+        a1.remove("qwe");
+        System.out.println(a1.size());
+        System.out.println(a1.contains("qwe"));
+
+        //两种遍历方式
+        Iterator<String> it = a1.iterator();
+        while (it.hasNext()){
+            System.out.println(it.next());
+        }
+
+        for (String item:a1){
+            System.out.println(item);
+        }
+结果：
+3
+2
+false
+tyu
+abc
+tyu
+abc
+```
+LinkedHashSet:具有hashset的查找效率，内部使用双向链表维护元素的插入顺序
+```
+
+```
+
+ArrayList：基于动态数组实现，支持随机访问,继承RandomAccess接口，数组默认大小为10，当其中元素多余容量时，会进行1.5倍的扩容，这是需要进行搬移复制操作。
+```
+public class ArrayList<E> extends AbstractList<E>
+        implements List<E>, RandomAccess, Cloneable, java.io.Serializable
+```
+基本使用：
+```
+        ArrayList<String> a1 = new ArrayList<>(10);
+        a1.add("abc");
+        a1.add("ert");
+        a1.add("opi");
+        System.out.println(a1);
+        a1.add(1,"www");
+        System.out.println(a1);
+        a1.remove("abc");
+        System.out.println(a1);
+        System.out.println(a1.size());
+        System.out.println(a1.get(2));
+        a1.set(1,"chen");
+        System.out.println(a1);
+
+结果：
+[abc, ert, opi]
+[abc, www, ert, opi]
+[www, ert, opi]
+3
+opi
+[www, chen, opi]
+```
+
+Vector:与ArrayList类似，但是是线程安全的
+
+LinkedList:继续双向链表实现，只能顺序访问，可以快速的在链表中插入和删除元素，Linkedlist还可以用作栈、队列和双向队列
+
+LinkedList：可以用来实现双向队列
+PriorityQueue：基于堆结构实现，可以用它来实现优先队列
+
+![equal用法](../.png/集合框架2.png)
+
+TreeMap:红黑树实现
+
+HashMap:基于哈希表实现
+
+HashTable:线程安全的。(遗留类？)线程安全，应使用ConcurrentHashMap来支持线程安全。
+
+LinkedHashMap:双向链表维护元素顺序，
