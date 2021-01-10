@@ -36,3 +36,4 @@ main
 Person Constructor
 Construnctor
 ```
+static不会影响作用域范围。可以做的是就是将不太会改变函数或变量设为static

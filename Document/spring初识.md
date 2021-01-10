@@ -78,3 +78,15 @@ spring框架根据不同class路径和生成具体的对象。id作为索引给�
 ```
 ioc.xml主要学习掌握就是不同的实例对象生成方式的xml书写方式，和调用的方法。
 
+12.20  
+**maven构建项目：**
+```
+IDEA 新建选择maven项目，会自动在项目目录下生成pom.xml文件，该文件是maven导入第三方包的配置文件。  
+在pom.xml中配置Spring所依赖的路径（dependency），该路径在网站maven上查找。
+context导入后，在resource目录下添加spring的配置文件ioc.xml
+java目录为项目的源码存放目录
+test目录为测试源码存放目录
+```
+
+
+
